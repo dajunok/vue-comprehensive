@@ -1,0 +1,114 @@
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+192.168.10.155	mir-envapi.etong.com
+192.168.10.155	mir-logapi.etong.com
+192.168.10.155	mir-payapi.etong.com
+192.168.10.155	mir-upgradeapi.etong.com
+192.168.10.155	mir-airapi.etong.com
+192.168.10.155	mir-creditdapi.etong.com
+192.168.10.155	mir-ddapi.etong.com
+192.168.10.155	mir-etapi.etong.com
+192.168.10.155	mir-hospitalapi.etong.com
+192.168.10.155	mir-jdapi.etong.com
+192.168.10.155	mir-mobileapi.etong.com
+192.168.10.155	mir-movieapi.etong.com
+192.168.10.155	mir-subscribeapi.etong.com
+192.168.10.155	mir-yhdapi.etong.com
+192.168.10.155	mir-buscardapi.etong.com
+192.168.10.155	mir-configapi.etong.com
+192.168.10.155	mir-dataflowapi.etong.com
+192.168.10.155	mir-memberapi.etong.com
+192.168.10.155	mir-menuapi.etong.com
+192.168.10.155	mir-orderapi.etong.com
+192.168.10.155	mir-trafficapi.etong.com
+192.168.10.155	mir-utilitiesapi.etong.com
+192.168.10.155	mir-wxjapi.etong.com
+192.168.10.155	mir-creditdweb.etong.com
+192.168.10.155	mir-dataflowweb.etong.com
+192.168.10.155	mir-resourceweb.etong.com
+192.168.10.155	mir-shopweb.etong.com
+192.168.10.155	mir-trafficweb.etong.com
+192.168.10.155	mir-homeweb.etong.com
+192.168.10.155	mir-mobileweb.etong.com
+192.168.10.155	mir-notifyapi.etong.com
+192.168.10.155	mir-airweb.etong.com
+192.168.10.155	mir-utilitiesweb.etong.com
+192.168.10.155	mir-movieweb.etong.com
+192.168.10.155	mir-hospitalweb.etong.com
+192.168.10.155	mir-trainweb.etong.com
+192.168.10.155	mir-trainapi.etong.com
+192.168.10.155	trainweb.etong.com
+192.168.10.155	mir-memberweb.etong.com
+192.168.10.155	mir-upgradeapi.etong.com
+192.168.10.155	mir-walletapi.etong.com
+192.168.10.155	mir-pbbapi.etong.com
+192.168.10.155	mir-etpfapi.etong.com
+192.168.10.155	mir-banktransferapi.etong.com
+192.168.10.155	mir-banktransferweb.etong.com
+192.168.10.155	mir-pbbapi.etong.com
+192.168.10.155	mir-pbbweb.etong.com
+192.168.10.155	mir-spweb.etong.com
+192.168.10.155	mir-oilapi.etong.com
+192.168.10.155	mir-oilweb.etong.com
+192.168.10.155	mir-hotelapi.etong.com
+192.168.10.155	mir-hotelweb.etong.com
+192.168.10.155	mir-collectapi.etong.com
+192.168.10.155	mir-collectweb.etong.com
+192.168.10.155	mir-bmapi.etong.com
+192.168.10.155  mir-etmapi.etong.com
+192.168.10.155  mir-etmadapi.etong.com
+
+192.168.10.78	mir-www.etmpay.com
+192.168.10.78   mir-www.etong.com
+
+192.168.10.78   mall.etong.com
+192.168.10.78   seller.etong.com
+192.168.10.78   list.etong.com
+192.168.10.78	search.etong.com
+# prod ?
+192.168.10.79   sms.etong.com
+192.168.10.78	sj.etong.com
+
+192.168.10.155	mir-zhe800api.etong.com
+192.168.10.78   mir-open.etong.com
+
+192.168.10.155  mir-attractionsapi.etong.com
+192.168.10.155  mir-attractionsweb.etong.com
+192.168.10.155  mir-farmerapi.etong.com
+
+192.168.10.155	mir-clientlogapi.etong.com
+192.168.10.155  mir-clientlogweb.etong.com
+
+#192.168.10.155  mir-coffeeapi.etong.com
+#192.168.10.155  mir-coffeeweb.etong.com
+
+# 测试、投产共用域名
+192.168.10.155  attractionscb.etong.com
+
+#github 
+13.250.177.223　　github.com
+13.229.188.59     github.com
+
+#webpack
+127.0.0.1 	webpack-demo.com
+
+

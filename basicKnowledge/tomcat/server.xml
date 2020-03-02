@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Server的主要任务，就是提供一个接口让客户端能够访问到这个Service集合，同时维护它所包含的所有的Service的声明周期，
+  包括如何初始化、如何结束服务、如何找到客户端要访问的Service。
+ -->
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
+  <Listener SSLEngine="on" className="org.apache.catalina.core.AprLifecycleListener"/>
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
+
+
+  <GlobalNamingResources>
+
+    <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
+  </GlobalNamingResources>
+
+  <!--Service的作用，是在Connector和Engine外面包了一层，把它们组装在一起，对外提供服务。 -->
+  <Service name="Catalina">
+
+    <!-- Connector的作用是从客户端接收请求 -->
+    <Connector URIEncoding="UTF-8" connectionTimeout="60000" port="8080" protocol="HTTP/1.1" redirectPort="8443" useBodyEncodingForURI="true"/>    
+    
+	<!-- Connector的作用是从客户端接收请求 -->
+	<Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
+
+
+    <!--引擎配置  Engine的作用是处理接收进来的请求。-->
+    <Engine defaultHost="localhost" name="Catalina">
+		  
+		  <Realm className="org.apache.catalina.realm.LockOutRealm">
+			
+				<Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+		  </Realm>
+		  <!-- Host虚拟主机的作用，是运行多个Web应用（一个Context代表一个Web应用），并负责安装、展开、启动和结束每个Web应用。Host组件代表的虚拟主机，对应了服务器中一个网络名实体(如”www.test.com”，或IP地址”116.25.25.25”)；为了使用户可以通过网络名连接Tomcat服务器，这个名字应该在DNS服务器上注册。 -->
+		  <Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">			
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
+				<!-- Context元素代表在特定虚拟主机上运行的一个Web应用。 -->
+				<Context docBase="F:\\FrontendProjects\\webpack-demo\\src\\myRes" path="webpack-demo" reloadable="true"/>
+		  </Host>
+		  
+		  <!-- Host虚拟主机的作用，是运行多个Web应用（一个Context代表一个Web应用），并负责安装、展开、启动和结束每个Web应用。Host组件代表的虚拟主机，对应了服务器中一个网络名实体(如”www.test.com”，或IP地址”116.25.25.25”)；为了使用户可以通过网络名连接Tomcat服务器，这个名字应该在DNS服务器上注册。 -->
+		  <Host appBase="webapps" autoDeploy="true" deployOnStartup="true" name="webpack-demo.com" unpackWARs="true">			
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
+				<!-- Context元素代表在特定虚拟主机上运行的一个Web应用。 -->
+				<Context docBase="F:\\FrontendProjects\\webpack-demo\\src\\myRes" path="web" reloadable="true"/>
+		  </Host>
+    </Engine>
+	
+	
+  </Service>
+</Server>
