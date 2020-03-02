@@ -30,4 +30,4 @@ npm i --save-dev html-webpack-plugin
 npm install --save-dev optimize-css-assets-webpack-plugin
 npm install terser-webpack-plugin --save-dev
 npm install copy-webpack-plugin --save-dev
-npm install --save-dev preload-webpack-plugin
+npm install --save-dev preload-webpack-plugin@^3.0.0-beta.4

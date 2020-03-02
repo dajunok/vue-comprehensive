@@ -41,7 +41,7 @@ module.exports={
                   { 
                     loader: MiniCssExtractPlugin.loader,  //提取.css文件
                     options:{
-                        publicPath:'../',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
+                        publicPath:'/myvue/',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
                     },
                   },
                   { loader: "css-loader" },     // translates CSS into CommonJS

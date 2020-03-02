@@ -19,6 +19,10 @@
   color: #2c3e50;
 }
 
+h1{
+  color: red; /*#2c3e50*/
+}
+
 #nav {
   padding: 30px;
 
