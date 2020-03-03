@@ -1,81 +1,8 @@
-一、webpack常用安装包
-------------------自身安装相关包
-
-npm install --save-dev  webpack-cli
-
-------------------babel文件转换(ES6转ES2005)相关包【webpack 4.x | babel-loader 8.x | babel 7.x】
-npm install -D html-webpack-plugin
-npm install -D babel-loader @babel/core @babel/preset-env webpack
-npm install -D @babel/plugin-transform-runtime @babel/plugin-proposal-class-properties
-npm install -D @babel/runtime
-
-
-------------------Vue相关安装包：
-npm install vue 
-npm install -D vue-loader vue-template-compiler 
-npm install vue-router
-npm install vuex --save
-
------------------url相关文件、图片、CSS样式文件加载相关包
-npm install -D css-loader  style-loader vue-style-loader  url-loader
-npm install -D sass-loader node-sass
-npm install -D less less-loader
-npm install -D stylus stylus-loader
-npm i -D postcss-loader autoprefixer
-npm install -g cnpm --registry=https://registry.npm.taobao.org   //这个采用淘宝镜像网站加快安装node-sass
------------------常用
-npm install -D mini-css-extract-plugin
-npm install rimraf --save-dev
-npm install --save-dev optimize-css-assets-webpack-plugin
-
------------------其他
-npm install dotenv
-
-npm install terser-webpack-plugin --save-dev
-npm install copy-webpack-plugin --save-dev
-npm install --save-dev preload-webpack-plugin@next    //^3.0.0-beta.4
-
-
-
-//////////////////////案例
-"devDependencies": {
-    "@babel/core": "^7.8.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.6",
-    "@babel/runtime": "^7.8.4",
-    "autoprefixer": "^9.7.4",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.2",
-    "html-webpack-plugin": "^3.2.0",
-    "less": "^3.11.1",
-    "less-loader": "^5.0.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.13.1",
-    "postcss-loader": "^3.0.0",
-    "rimraf": "^3.0.2",
-    "sass-loader": "^8.0.2",
-    "style-loader": "^1.1.3",
-    "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2",
-    "url-loader": "^3.0.0",
-    "vue-loader": "^15.9.0",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
-  },
-  "dependencies": {
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.6",
-    "vuex": "^3.1.2"
-  }
-
-  /////////====================================================================webpack配置案例一
-  const path=require('path');
+const path=require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //将css单独打包成一个文件的插件，它为每个包含css的js文件都创建一个css文件。它支持css和sourceMaps的按需加载。
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');  //用于优化、压缩CSS文件的webpack插件。
 const webpack =require('webpack');
 
 
@@ -96,7 +23,7 @@ module.exports={
     },
     output:{   
       path:path.resolve(__dirname,'./dist'),   //将输出文件都放到dist目录下 
-      filename:"js/[name].js",   //决定了每个入口(entry) 输出 bundle 的名称。
+      filename:"js/[name].[hash:8].js",   //决定了每个入口(entry) 输出 bundle 的名称。
       chunkFilename: 'js/[name].[chunkhash:8].js', //决定了非入口(non-entry) chunk 文件的名称。
       library:'myLibrary',    //library规定了组件库返回值的名字，也就是对外暴露的模块名称
       libraryTarget: 'umd',   //libraryTarget就是配置webpack打包内容的模块方式的参数：umd: 将你的library暴露为所有的模块定义下都可运行的方式。
@@ -140,7 +67,7 @@ module.exports={
                     }]],
                     cacheDirectory:true,   //可以通过使用 cacheDirectory 选项，将 babel-loader 提速至少两倍。 这会将转译的结果缓存到文件系统中。
                     //"sourceMaps": "inline",   //"inline"：生成内联源码映射表（inline source maps）。
-                    plugins: ['@babel/plugin-transform-runtime','@babel/plugin-proposal-class-properties'],  //babel引入 babel runtime 作为一个独立模块，来避免重复引入。
+                    plugins: ['@babel/plugin-transform-runtime','@babel/plugin-proposal-class-properties','@babel/transform-arrow-functions'],  //babel引入 babel runtime 作为一个独立模块，来避免重复引入。
                 }
               }
             },            
@@ -173,6 +100,31 @@ module.exports={
         alias:{
             '@': path.resolve(__dirname,'src')
         }  
+    },
+    //优化-----------------------
+    optimization:{
+        splitChunks: {
+           cacheGroups: { // 缓存组（webpack使用cacheGroups选项实现静态拆分打包）
+                vendors: {  // split `node_modules`目录下被打包的代码到 `js/vendor.js`没找到可打包文件的话，则没有。
+                    test: /[\\/]node_modules[\\/]/,  //控制此缓存组选择的模块。忽略它将选择所有模块。它可以是正则表达式（RegExp）、字符串或函数。
+                    name:'chunk-vendors',  //打包后的路径与名称
+                    priority: -10,     //设置优先级别
+                    chunks: 'initial'
+                },
+                common: {  
+                  name: 'chunk-common',
+                  minChunks: 2,
+                  priority: -20,
+                  chunks: 'initial',
+                  reuseExistingChunk: true
+                },              
+            } 
+        },
+        runtimeChunk:{ name: 'runtime' },  // 为每个入口提取出webpack runtime模块
+        minimize: true,    //生产环境默认压缩，不需要进行配（开发环境需要配置）
+        minimizer:[  //使用插件对相关文件进行压缩
+            new OptimizeCssAssetsPlugin(), //用于优化、压缩CSS文件的webpack插件。
+        ]
     }, 
     //配置插件---------------
     plugins: [
@@ -187,7 +139,7 @@ module.exports={
             //favicon:'../public/favicon.ico',
             title: 'webpack-ok',            
             filename: 'index.html', // 生成的html文件名，该文件将被放置在输出目录 
-            chunks: ['main'],        
+            chunks: ['main','chunk-vendors','chunk-common','runtime'],        
             template: path.join(__dirname, './public/index.ejs'),   // 模板源html或ejs文件路径
             minify:{  //代码压缩
                     removeRedundantAttributes:true, // 删除多余的属性
